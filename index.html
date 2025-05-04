@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>盧依琪 個人介紹</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e2e8f0;
+      font-family: 'Orbitron', sans-serif;
+      background-image: radial-gradient(circle at 50% 20%, rgba(56,189,248,0.1) 0%, transparent 60%), url('https://www.transparenttextures.com/patterns/circles.png');
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
+    }
+    .futuristic-border {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+    .neon-title {
+      text-shadow: 0 0 5px #3b82f6, 0 0 10px #0ea5e9;
+    }
+  </style>
+</head>
+<body>
+  <div class="max-w-4xl mx-auto p-6 space-y-8">
+    <div class="flex flex-col md:flex-row items-center gap-6 p-6 rounded futuristic-border">
+      <img src="avatar.jpg" alt="盧依琪頭像" class="w-36 h-36 rounded-full object-cover border-4 border-cyan-400 shadow-md" />
+      <div class="space-y-3">
+        <h2 class="text-3xl font-bold text-cyan-300 neon-title">盧依琪</h2>
+        <p class="text-base text-gray-300">
+          我是熱愛設計的產品設計師，擅長分析使用者行為，打造簡潔而具互動性的設計介面。生活中喜歡旅行與攝影，也熱愛音樂與打爵士鼓，善於從不同感官體驗汲取靈感，持續在創作中挑戰自我。
+        </p>
+        <div class="text-sm space-y-1 text-gray-400">
+          <div>姓名：盧依琪（Lisa）</div>
+          <div>生日：1989/03/15</div>
+          <div>信箱：aibejun77@gmail.com</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-6 rounded futuristic-border space-y-6">
+      <div class="space-y-2">
+        <h3 class="text-xl text-cyan-300 font-semibold">網頁小遊戲 - 踩地雷</h3>
+        <p class="text-gray-300">一個具有難度選擇與互動介面的經典踩地雷遊戲。</p>
+        <div class="relative">
+          <iframe id="mineIframe" src="index-踩地雷.html" class="w-[1200px] h-[1600px] mx-auto border border-cyan-500 rounded" allowfullscreen></iframe>
+          <div class="text-center mt-2">
+            <button onclick="document.getElementById('mineIframe').requestFullscreen();" class="px-4 py-1 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded">全螢幕</button>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-xl text-cyan-300 font-semibold">網頁小遊戲 - 科技風跳棋</h3>
+        <p class="text-gray-300">設計感十足的跳棋遊戲，支援 AI 對戰與悔棋功能。</p>
+        <div class="relative">
+          <iframe id="chessIframe" src="index跳棋.html" class="w-[1200px] h-[1600px] mx-auto border border-cyan-500 rounded" allowfullscreen></iframe>
+          <div class="text-center mt-2">
+            <button onclick="document.getElementById('chessIframe').requestFullscreen();" class="px-4 py-1 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded">全螢幕</button>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-xl text-cyan-300 font-semibold">變超人</h3>
+        <p class="text-gray-300">以超能力為主題的互動動畫短片，展現創意與視覺設計整合。</p>
+        <video controls class="w-full max-w-md mx-auto rounded-lg border border-cyan-500">
+          <source src="變超人.mp4" type="video/mp4">
+          您的瀏覽器不支援影片播放。
+        </video>
+      </div>
+      <div class="space-y-2">
+        <h3 class="text-xl text-cyan-300 font-semibold">太空船起飛</h3>
+        <p class="text-gray-300">展現未來太空旅程的視覺動態設計，結合節奏與動畫技術。</p>
+        <video controls class="w-full max-w-md mx-auto rounded-lg border border-cyan-500">
+          <source src="太空船起飛.mp4" type="video/mp4">
+          您的瀏覽器不支援影片播放。
+        </video>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

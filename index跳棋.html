@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科技風跳棋 - 基礎升級版</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #eee;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    gap: 2px;
+    margin-bottom: 20px;
+  }
+  .cell {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .black { background-color: #333; }
+  .white { background-color: #ccc; }
+  .piece {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+  }
+  .piece.ai {
+    background: blue;
+  }
+  .highlight {
+    outline: 3px solid yellow;
+  }
+  .controls button {
+    margin: 5px;
+    padding: 10px 20px;
+    background: #1f1f1f;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .controls button:hover {
+    background: #444;
+  }
+</style>
+</head>
+<body>
+<h1>科技風跳棋（基礎升級版）</h1>
+<div id="board"></div>
+<div class="controls">
+  <button onclick="restartGame()">重新開始</button>
+  <button onclick="undoMove()">悔棋</button>
+  <button onclick="showHint()">提示最佳移動</button>
+</div>
+<script>
+const board = document.getElementById('board');
+let gameState = [];
+let history = [];
+let selectedPiece = null;
+const size = 8;
+let undoCount = 3;
+
+function initBoard() {
+  board.innerHTML = '';
+  gameState = [];
+  for (let r = 0; r < size; r++) {
+    const row = [];
+    for (let c = 0; c < size; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell ' + ((r+c)%2==0 ? 'white' : 'black');
+      cell.dataset.row = r;
+      cell.dataset.col = c;
+      board.appendChild(cell);
+      row.push(null);
+    }
+    gameState.push(row);
+  }
+  setupPieces();
+}
+
+function setupPieces() {
+  for (let r = 0; r < 3; r++) {
+    for (let c = 0; c < size; c++) {
+      if ((r+c)%2 !== 0) placePiece(r, c, 'ai');
+    }
+  }
+  for (let r = size-3; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if ((r+c)%2 !== 0) placePiece(r, c, 'player');
+    }
+  }
+}
+
+function placePiece(r, c, type) {
+  const piece = document.createElement('div');
+  piece.className = 'piece' + (type==='ai' ? ' ai' : '');
+  piece.dataset.type = type;
+  piece.dataset.row = r;
+  piece.dataset.col = c;
+  piece.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectPiece(e.target);
+  });
+  board.querySelector(`.cell[data-row='${r}'][data-col='${c}']`).appendChild(piece);
+  gameState[r][c] = type;
+}
+
+function selectPiece(piece) {
+  clearHighlights();
+  if (piece.dataset.type !== 'player') return;
+  piece.classList.add('highlight');
+  selectedPiece = piece;
+}
+
+function clearHighlights() {
+  document.querySelectorAll('.piece').forEach(p => p.classList.remove('highlight'));
+}
+
+board.addEventListener('click', e => {
+  if (!selectedPiece) return;
+  const r = parseInt(e.target.dataset.row);
+  const c = parseInt(e.target.dataset.col);
+  movePiece(parseInt(selectedPiece.dataset.row), parseInt(selectedPiece.dataset.col), r, c);
+  selectedPiece = null;
+});
+
+function movePiece(sr, sc, dr, dc) {
+  if (isValidMove(sr, sc, dr, dc)) {
+    saveHistory();
+    board.querySelector(`.cell[data-row='${sr}'][data-col='${sc}']`).innerHTML = '';
+    placePiece(dr, dc, 'player');
+    gameState[sr][sc] = null;
+    checkEnd('player');
+    aiMove();
+  }
+}
+
+function isValidMove(sr, sc, dr, dc) {
+  return Math.abs(sr-dr) === 1 && Math.abs(sc-dc) === 1 && !gameState[dr][dc];
+}
+
+function saveHistory() {
+  history.push(JSON.parse(JSON.stringify(gameState)));
+}
+
+function undoMove() {
+  if (history.length > 0 && undoCount > 0) {
+    gameState = history.pop();
+    undoCount--;
+    renderBoard();
+  } else {
+    alert("已無可用悔棋次數！");
+  }
+}
+
+function aiMove() {
+  const moves = [];
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (gameState[r][c] === 'ai') {
+        const directions = [[1,-1], [1,1]];
+        directions.forEach(([dr, dc]) => {
+          const nr = r + dr;
+          const nc = c + dc;
+          if (nr>=0 && nr<size && nc>=0 && nc<size && !gameState[nr][nc]) {
+            moves.push({from:{r,c},to:{r:nr,c:nc}});
+          }
+        });
+      }
+    }
+  }
+  if (moves.length > 0) {
+    saveHistory();
+    const move = moves[Math.floor(Math.random()*moves.length)];
+    board.querySelector(`.cell[data-row='${move.from.r}'][data-col='${move.from.c}']`).innerHTML = '';
+    placePiece(move.to.r, move.to.c, 'ai');
+    gameState[move.from.r][move.from.c] = null;
+  }
+  checkEnd('ai');
+}
+
+function renderBoard() {
+  board.querySelectorAll('.cell').forEach(cell => cell.innerHTML = '');
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
+      if (gameState[r][c]) {
+        placePiece(r, c, gameState[r][c]);
+      }
+    }
+  }
+}
+
+function restartGame() {
+  history = [];
+  undoCount = 3;
+  initBoard();
+}
+
+function showHint() {
+  alert('建議移動：選擇前方對角空格的一枚棋子。');
+}
+
+function checkEnd(player) {
+  const playerPieces = [].concat(...gameState).filter(p => p === player);
+  if (playerPieces.length === 0) {
+    setTimeout(() => alert(player === 'player' ? '😢 你輸了！' : '🎉 你贏了！'), 100);
+  }
+}
+
+initBoard();
+</script>
+</body>
+</html>
