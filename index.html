@@ -1,89 +1,165 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>盧依琪 個人介紹</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盧依琪的個人介紹</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b), url('https://images.unsplash.com/photo-1618577463409-0ec071a3ed5b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
-      background-size: cover;
-      color: #e2e8f0;
-      font-family: 'Orbitron', sans-serif;
-      background-image: radial-gradient(circle at 50% 20%, rgba(56,189,248,0.1) 0%, transparent 60%), url('https://www.transparenttextures.com/patterns/circles.png');
-      background-repeat: no-repeat;
-      background-position: center top;
-      background-size: cover;
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #d2faff, #ffe4f8);
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
     }
-    .futuristic-border {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      background: rgba(0, 0, 0, 0.4);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    header {
+      background: rgba(255, 182, 193, 0.85);
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      border-bottom: 5px dotted white;
     }
-    .neon-title {
-      text-shadow: 0 0 5px #3b82f6, 0 0 10px #0ea5e9;
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      background: rgba(255, 160, 122, 0.9);
+      padding: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0 0 16px 16px;
+    }
+    nav a {
+      background: #ffd1dc;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      background: #ffb6c1;
+      transform: scale(1.1);
+    }
+    .page {
+      display: none;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      margin: 1rem;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 4px dashed #ffccf9;
+    }
+    .active {
+      display: block;
+    }
+    .avatar {
+      width: 180px;
+      border-radius: 50%;
+      border: 5px dotted #ff69b4;
+      margin-bottom: 1rem;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .emoji {
+      position: absolute;
+      font-size: 40px;
+      animation: float 12s infinite linear;
+      opacity: 0.7;
+    }
+    @keyframes float {
+      0% { transform: translateX(-100px) rotate(0deg); }
+      100% { transform: translateX(100vw) rotate(360deg); }
+    }
+    .portfolio-item {
+      margin-bottom: 20px;
+      border-left: 6px solid #ffa07a;
+      padding-left: 10px;
+    }
+    video {
+      max-width: 100%;
+      height: auto;
+      border: 4px double #f8cddf;
+      border-radius: 16px;
+      background: #fff0f5;
+    }
+    h2::before {
+      content: '🌟 ';
+    }
+    h3::before {
+      content: '💡 ';
+    }
+    li::before {
+      content: '👉';
+      margin-right: 4px;
     }
   </style>
 </head>
 <body>
-  <div class="max-w-4xl mx-auto p-6 space-y-8">
-    <div class="flex flex-col md:flex-row items-center gap-6 p-6 rounded futuristic-border">
-      <img src="avatar.jpg" alt="盧依琪頭像" class="w-36 h-36 rounded-full object-cover border-4 border-cyan-400 shadow-md" />
-      <div class="space-y-3">
-        <h2 class="text-3xl font-bold text-cyan-300 neon-title">盧依琪</h2>
-        <p class="text-base text-gray-300">
-          我是一位喜愛旅遊與攝影的產品設計師，總是帶著相機記錄旅程中的美好時刻。平時喜歡參加音樂會，也會打爵士鼓，透過節奏和影像來表達生活中的靈感與熱情。
-        </p>
-        <div class="text-sm space-y-1 text-gray-400">
-          <div>姓名：盧依琪（Lisa）</div>
-          <div>生日：1989/03/15</div>
-          <div>信箱：aibejun77@gmail.com</div>
-        </div>
-      </div>
-    </div>
+  <header>
+    <h1>盧依琪 (Lisa)</h1>
+    <p>產品設計師 | 音樂愛好者 | 探險旅人</p>
+  </header>
+  <nav>
+    <a href="#" onclick="showPage('about')">關於我</a>
+    <a href="#" onclick="showPage('portfolio')">作品集</a>
+    <a href="#" onclick="showPage('contact')">聯絡方式</a>
+  </nav>
 
-    <div class="p-6 rounded futuristic-border space-y-6">
-      <div class="space-y-2">
-        <h3 class="text-xl text-cyan-300 font-semibold">網頁小遊戲 - 踩地雷</h3>
-        <p class="text-gray-300">一個具有難度選擇與互動介面的經典踩地雷遊戲。</p>
-        <div class="relative">
-          <iframe id="mineIframe" src="index-踩地雷.html" class="w-[1200px] h-[1600px] mx-auto border border-cyan-500 rounded" allowfullscreen></iframe>
-          <div class="text-center mt-2">
-            <button onclick="document.getElementById('mineIframe').requestFullscreen();" class="px-4 py-1 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded">全螢幕</button>
-          </div>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <h3 class="text-xl text-cyan-300 font-semibold">網頁小遊戲 - 科技風跳棋</h3>
-        <p class="text-gray-300">設計感十足的跳棋遊戲，支援 AI 對戰與悔棋功能。</p>
-        <div class="relative">
-          <iframe id="chessIframe" src="index跳棋.html" class="w-[1200px] h-[1600px] mx-auto border border-cyan-500 rounded" allowfullscreen></iframe>
-          <div class="text-center mt-2">
-            <button onclick="document.getElementById('chessIframe').requestFullscreen();" class="px-4 py-1 text-sm bg-cyan-600 hover:bg-cyan-500 text-white rounded">全螢幕</button>
-          </div>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <h3 class="text-xl text-cyan-300 font-semibold">變超人</h3>
-        <p class="text-gray-300">以超能力為主題的互動動畫短片，展現創意與視覺設計整合。</p>
-        <video controls class="w-full max-w-md mx-auto rounded-lg border border-cyan-500">
-          <source src="變超人.mp4" type="video/mp4">
-          您的瀏覽器不支援影片播放。
-        </video>
-      </div>
-      <div class="space自我介紹-y-2">
-        <h3 class="text-xl text-cyan-300 font-semibold">太空船起飛</h3>
-        <p class="text-gray-300">展現未來太空旅程的視覺動態設計，結合節奏與動畫技術。</p>
-        <video controls class="w-full max-w-md mx-auto rounded-lg border border-cyan-500">
-          <source src="太空船起飛.mp4" type="video/mp4">
-          您的瀏覽器不支援影片播放。
-        </video>
-      </div>
+  <div id="about" class="page active">
+    <img src="avatar.jpg" alt="盧依琪頭像" class="avatar">
+    <h2>自我介紹</h2>
+    <p>我是盧依琪，一位熱愛創造的產品設計師，喜歡用設計講故事。平日喜歡聽音樂、旅遊、登山與打爵士鼓，享受生活每個節奏與風景。</p>
+    <h3>基本資料</h3>
+    <ul>
+      <li>姓名：盧依琪 (Lisa)</li>
+      <li>生日：1989/03/15</li>
+      <li>職業：產品設計師</li>
+      <li>信箱：aibejun77@gmail.com</li>
+    </ul>
+  </div>
+
+  <div id="portfolio" class="page">
+    <h2>作品集</h2>
+    <div class="portfolio-item">
+      <h3>科技風跳棋（基礎升級版）</h3>
+      <a href="index跳棋.html" target="_blank">點此體驗跳棋遊戲</a>
+    </div>
+    <div class="portfolio-item">
+      <h3>踩地雷 Minesweeper</h3>
+      <a href="index-踩地雷.html" target="_blank">點此體驗踩地雷遊戲</a>
+    </div>
+    <div class="portfolio-item">
+      <h3>動畫短片：太空船起飛</h3>
+      <video controls src="太空船起飛.mp4"></video>
+    </div>
+    <div class="portfolio-item">
+      <h3>動畫短片：變超人</h3>
+      <video controls src="變超人.mp4"></video>
     </div>
   </div>
+
+  <div id="contact" class="page">
+    <h2>聯絡方式</h2>
+    <p>歡迎透過電子信箱與我聯繫：aibejun77@gmail.com</p>
+  </div>
+
+  <!-- 隨機可愛浮動元素 -->
+  <div class="emoji" style="top: 10%; left: 0;">🧁</div>
+  <div class="emoji" style="top: 25%; left: -30px; animation-delay: 2s;">🦄</div>
+  <div class="emoji" style="top: 45%; left: -50px; animation-delay: 4s;">🎀</div>
+  <div class="emoji" style="top: 65%; left: -70px; animation-delay: 6s;">🍓</div>
+  <div class="emoji" style="top: 80%; left: -90px; animation-delay: 8s;">🐻</div>
+  <div class="emoji" style="top: 90%; left: -120px; animation-delay: 10s;">⭐</div>
+
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 </body>
 </html>
